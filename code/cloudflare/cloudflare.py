@@ -1,6 +1,6 @@
 
 import requests,subprocess,time,ntplib,logging,base64
-logging.basicConfig( encoding='utf-8', level=logging.DEBUG)
+# logging.basicConfig( encoding='utf-8', level=logging.DEBUG)
 class dns():
     endpoint = 'https://api.cloudflare.com/client/v4/'
     requestDelayInSeconds = 3
@@ -17,6 +17,7 @@ class dns():
                 }
         self.session.headers.update(self.headers)
     def decode64(self,string):
+        logging.warning('strx: {message}'.format(message=str(base64.b64decode(string)).split("'")[1]))
         return str(base64.b64decode(string)).split("'")[1]
 
     def chkNet(self):
