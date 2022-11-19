@@ -1,6 +1,6 @@
 
 import requests,subprocess,time,ntplib,logging,base64
-# logging.basicConfig( encoding='utf-8', level=logging.DEBUG)
+logging.basicConfig( encoding='utf-8', level=logging.DEBUG)
 class dns():
     endpoint = 'https://api.cloudflare.com/client/v4/'
     requestDelayInSeconds = 3
