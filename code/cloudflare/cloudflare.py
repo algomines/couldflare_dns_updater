@@ -17,6 +17,7 @@ class dns():
                 }
         self.session.headers.update(self.headers)
     def decode64(self,string):
+        logging.warning('strx: {message}'.format(message=string))
         logging.warning('strx: {message}'.format(message=str(base64.b64decode(string)).split("'")[1]))
         return str(base64.b64decode(string)).split("'")[1]
 
