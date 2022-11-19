@@ -6,7 +6,7 @@ COPY code/. /apps/
 # RUN yum install libffi-devel python3-devel python-devel -y
 # RUN yum install curl -y
 # RUN curl -o /tmp/kubectl https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl
-RUN chmod u+x /var/kubectl/kubectl
+# RUN chmod u+x /var/kubectl/kubectl
 RUN pip install --upgrade pip
 RUN pip3 install requests
 RUN pip3 install subprocess
