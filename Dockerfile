@@ -9,7 +9,7 @@ COPY code/. /apps/
 # RUN chmod u+x /var/kubectl/kubectl
 RUN pip install --upgrade pip
 RUN pip3 install requests
-RUN python -m pip install subprocess
+# RUN python -m pip install subprocess
 RUN pip3 install ntplib
 # RUN pip3 install websocket-client
 # RUN pip3 install rel
