@@ -1,0 +1,68 @@
+apiVersion: v1
+kind: Pod
+spec:
+  serviceAccountName: jenkins
+  containers:
+    - name: gitnode
+      image: bitnami/git:latest
+      command:
+      - cat
+      tty: true
+    - name: dockernode
+      image: docker:latest
+      volumeMounts:
+      - name: dockersock
+        mountPath: "/var/run/docker.sock"
+      # - name: kubectl
+      #   mountPath: "/tmp/kubectl"
+      command:
+      - cat
+      tty: true
+    - name: kubectl
+      # image: nginx
+      image: bibinwilson/docker-kubectl:latest
+    #   # image: bitnami/kubectl:latest
+    #   volumeMounts:
+    #   - name: kubectl
+    #     mountPath: "/tmp/kubectl"
+# docker run --rm --name kubectl -v C:/Users/LUCKY/.kube/config:/.kube/config bitnami/kubectl:latest 
+# docker run --rm --name kubectl -v C:/Users/LUCKY/.kube/config:/.kube/config rancher/kubectl:v1.23.7
+      command:
+      - cat
+      tty: true
+  volumes:
+  - name: dockersock
+    hostPath:
+      path: /var/run/docker.sock
+  # - name: kubectl
+  #   hostPath:
+  #     path: /run/desktop/mnt/host/c/k8s_data/kubectl
+      # type: File
+  
+    # image: docker:rc-dind-rootless
+    # image: docker:19.03.1-dind
+    # extraVolumes:
+    # - hostPath:
+    #     path: /var/run/docker.sock
+    #     name: docker-sock
+    # extraVolumeMounts:
+    #   - mountPath: /var/run/docker.sock
+    #     name: docker-sock
+
+
+
+  # - name: amazonlinux
+  #   image: amazonlinux:latest
+  #   command:
+  #   - cat
+  #   tty: true
+  # - name: jenkinsslave
+  #   image: jenkins/slave:latest
+  #   command:
+  #   - cat
+  #   tty: true
+  # - name: jenkinsslave
+  #   image: jenkinsci/jnlp-slave:latest
+  #   command:
+  #   - cat
+  #   tty: true
