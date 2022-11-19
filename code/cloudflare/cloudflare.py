@@ -44,7 +44,10 @@ class dns():
     
     def getCluserDomains(self):
         a = subprocess.run(["/var/kubectl/kubectl", "get", "ing", "-A", "-o=jsonpath='{.items..spec..host}'"],shell=True, check=True, capture_output=True, text=True)
-        return a.stdout.replace("'", "").split(' ')
+        domains = a.stdout.replace("'", "").split(' ')
+        for x in domains:
+            logging.warning('kubectl -> Domain: {message}'.format(message=x))
+        return domains
 
     def listDNZRecords(self):
         response = self.rGet('zones/{zone_identifier}/dns_records'.format(zone_identifier=self.zone_identifier))
@@ -58,7 +61,7 @@ class dns():
             return []
 
     def getClusterPublicIP(self):
-        x = requests.get('https://ipinfo.io/json')
+        x = requests.get('https://ipinfo.io/json/?token=25d96bb1364483')
         if x.status_code==200:
             x = x.json()
             return x["ip"]
