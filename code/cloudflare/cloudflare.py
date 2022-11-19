@@ -6,9 +6,9 @@ class dns():
     requestDelayInSeconds = 3
     publicIP=''
     def __init__(self, ACCOUNT_ID='', ZONE_IDENTIFIER='',DNS_TOKEN='', **kwargs):
-        self.account_id=base64.b64decode(ACCOUNT_ID).decode('utf-8')
-        self.zone_identifier=base64.b64decode(ZONE_IDENTIFIER).decode('utf-8')
-        self.token=base64.b64decode(DNS_TOKEN).decode('utf-8')
+        self.account_id=self.decode64(ACCOUNT_ID)
+        self.zone_identifier=self.decode64(ZONE_IDENTIFIER)
+        self.token=self.decode64(DNS_TOKEN)
         self.session = requests.Session()
         self.headers = {
                     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36',
@@ -16,6 +16,8 @@ class dns():
                     'Authorization': 'Bearer {token}'.format(token=self.token),
                 }
         self.session.headers.update(self.headers)
+    def decode64(self,string):
+        return str(base64.b64decode(string)).split("'")[1]
 
     def chkNet(self):
         try:
