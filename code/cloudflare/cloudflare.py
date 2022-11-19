@@ -26,7 +26,7 @@ class dns():
             return False
 
     def rGet(self,path,headers={},data={}):
-        logging.warning('Path: {message}'.format(message=self.endpoint+path))
+        # logging.warning('Path: {message}'.format(message=self.endpoint+path))
         if len(headers)>0:
             self.session.headers.update(headers)
         return self.session.get(url = self.endpoint+path, params = data)
@@ -43,10 +43,10 @@ class dns():
             return False
     
     def getCluserDomains(self):
-        a = subprocess.run(["/var/kubectl/kubectl", "get", "ing", "-A", "-o=jsonpath='{.items..spec..host}'"],shell=True, check=True, capture_output=True, text=True)
+        a = subprocess.run(["/var/kubectl/kubectl get ing -A -o=jsonpath='{.items..spec..host}'"],shell=True, check=True, capture_output=True, text=True)
         domains = a.stdout.replace("'", "").split(' ')
-        for x in domains:
-            logging.warning('kubectl -> Domain: {message}'.format(message=x))
+        # for x in domains:
+        #     logging.warning('kubectl -> Domain: {message}'.format(message=x))
         return domains
 
     def listDNZRecords(self):
@@ -95,7 +95,7 @@ class dns():
         if self.publicIP != publicIP:
             self.publicIP = publicIP
             logging.warning('New IPv4: {message}'.format(message=publicIP))
-            logging.warning('New IPv6: {message}'.format(message=publicIPv6))
+            # logging.warning('New IPv6: {message}'.format(message=publicIPv6))
             records = self.getPointingRecords(domains=self.getCluserDomains(),filter=True)
             for x in records:
                 if (x['type'] == 'A' and x['content']!=publicIP) or (x['type'] == 'AAAA' and x['content']!=publicIPv6):
