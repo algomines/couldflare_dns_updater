@@ -6,9 +6,9 @@ class dns():
     requestDelayInSeconds = 3
     publicIP=''
     def __init__(self, ACCOUNT_ID='', ZONE_IDENTIFIER='',DNS_TOKEN='', **kwargs):
-        self.account_id=self.decode64(ACCOUNT_ID)
-        self.zone_identifier=self.decode64(ZONE_IDENTIFIER)
-        self.token=self.decode64(DNS_TOKEN)
+        self.account_id=ACCOUNT_ID
+        self.zone_identifier=ZONE_IDENTIFIER
+        self.token=DNS_TOKEN
         self.session = requests.Session()
         self.headers = {
                     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36',
@@ -16,10 +16,6 @@ class dns():
                     'Authorization': 'Bearer {token}'.format(token=self.token),
                 }
         self.session.headers.update(self.headers)
-    def decode64(self,string):
-        logging.warning('strx: {message}'.format(message=string))
-        logging.warning('strx: {message}'.format(message=str(base64.b64decode(string)).split("'")[1]))
-        return str(base64.b64decode(string)).split("'")[1]
 
     def chkNet(self):
         try:
@@ -30,6 +26,7 @@ class dns():
             return False
 
     def rGet(self,path,headers={},data={}):
+        logging.warning('Path: {message}'.format(message=self.endpoint+path))
         if len(headers)>0:
             self.session.headers.update(headers)
         return self.session.get(url = self.endpoint+path, params = data)
